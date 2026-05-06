@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --text-primary: #1a1a1a; --text-secondary: #555; --text-muted: #888; --text-info: #0c447c;
+  --text-success: #27500a; --text-warning: #633806;
+  --bg: #f7f7f5; --bg-card: #ffffff; --bg-secondary: #f2f2ef;
+  --bg-info: #e6f1fb; --bg-success: #eaf3de; --bg-warning: #faeeda;
+  --border: #e4e4e0; --border-soft: #eeeeeb;
+  --accent-green: #1a6b3c;
+  --radius-md: 8px; --radius-lg: 12px;
+  .iframe-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-soft);
+    margin: 1.5rem 0;
+  }
+
+  .iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-primary); font-size: 15px; line-height: 1.6; padding: 2rem 1rem; }
+.port { max-width: 740px; margin: 0 auto; }
+
+.hero { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem 2.25rem; margin-bottom: 1.25rem; }
+.hero-eye { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-green); margin-bottom: 6px; }
+.hero-name { font-size: 26px; font-weight: 600; margin-bottom: 3px; }
+.hero-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 1.25rem; }
+.hero-bio { font-size: 14px; line-height: 1.75; margin-bottom: 1.25rem; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 7px; }
+.tag { font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: var(--radius-md); background: var(--bg-success); color: var(--text-success); }
+
+.parkade-note { background: var(--bg-success); border: 1px solid #c0dd97; border-radius: var(--radius-md); padding: 0.75rem 1rem; font-size: 13px; color: var(--text-success); margin-bottom: 1.5rem; line-height: 1.6; }
+.parkade-note strong { font-weight: 600; }
+
+.sec-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.9rem; }
+
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.75rem; }
+.metric-card { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 1rem 1.1rem; cursor: default; transition: transform 0.15s; }
+.metric-card:hover { transform: translateY(-2px); }
+.metric-num { font-size: 22px; font-weight: 600; }
+.metric-ph { font-size: 13px; font-style: italic; color: var(--text-muted); font-weight: 400; }
+.metric-label { font-size: 11px; color: var(--text-secondary); margin-top: 3px; line-height: 1.4; }
+
+hr { border: none; border-top: 1px solid var(--border-soft); margin: 1.75rem 0; }
+
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.filter-btn { font-size: 12px; padding: 5px 13px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-secondary); cursor: pointer; transition: all 0.15s; }
+.filter-btn:hover { border-color: #aaa; color: var(--text-primary); }
+.filter-btn.active { background: var(--text-primary); color: #fff; border-color: var(--text-primary); }
+
+.case-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem 1.75rem; margin-bottom: 1rem; transition: border-color 0.15s, opacity 0.2s; }
+.case-card:hover { border-color: #bbb; }
+.case-card.hidden { display: none; }
+.case-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.case-client { font-size: 11px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; }
+.case-title { font-size: 17px; font-weight: 600; }
+.case-type { font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+.type-content { background: var(--bg-info); color: var(--text-info); }
+.type-rebrand { background: var(--bg-success); color: var(--text-success); }
+.type-brand { background: var(--bg-warning); color: var(--text-warning); }
+
+.case-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 10px; }
+.case-note { font-size: 12px; color: var(--text-secondary); font-style: italic; line-height: 1.6; border-left: 2px solid var(--border); padding-left: 10px; margin-bottom: 10px; }
+
+.expand-btn { font-size: 12px; color: var(--text-secondary); background: none; border: none; cursor: pointer; padding: 0 0 10px; display: flex; align-items: center; gap: 5px; }
+.expand-btn:hover { color: var(--text-primary); }
+.expand-body { overflow: hidden; transition: max-height 0.3s ease; max-height: 0; }
+.expand-body.open { max-height: 200px; }
+
+.results { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 10px; }
+.pill { font-size: 12px; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); color: var(--text-primary); background: var(--bg-secondary); }
+.pill .ph { font-style: italic; color: var(--text-muted); }
+.pill .num { color: var(--accent-green); font-weight: 600; }
+
+.case-footer { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.sk { font-size: 11px; padding: 3px 8px; border-radius: var(--radius-md); background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-soft); }
+.live-link { font-size: 12px; color: var(--text-info); text-decoration: none; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius-md); margin-left: auto; display: flex; align-items: center; gap: 5px; transition: background 0.15s; }
+.live-link:hover { background: var(--bg-info); }
+
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 1.75rem; }
+.skill-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; transition: border-color 0.15s; }
+.skill-card:hover { border-color: #bbb; }
+.skill-card-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+.skill-items { font-size: 12px; color: var(--text-secondary); line-height: 1.9; }
+
+.bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+.bar-label { font-size: 11px; color: var(--text-secondary); min-width: 90px; }
+.bar-track { flex: 1; height: 4px; background: var(--border-soft); border-radius: 2px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 2px; background: var(--accent-green); width: 0; transition: width 1s ease; }
+
+.cta-bar { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem 1.75rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.cta-text { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.cta-sub { font-size: 13px; color: var(--text-muted); }
+.cta-sub a { color: var(--text-info); text-decoration: none; }
+
+@media (max-width: 520px) {
+  .hero, .case-card { padding: 1.25rem; }
+  .case-header { flex-direction: column; }
+  .hero-name { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+<div class="port">
+
+  <div class="hero">
+    <div class="hero-eye">Marketing Portfolio</div>
+    <div class="hero-name">Fel Quinn</div>
+    <div class="hero-sub">Marketing Director / Senior Content Manager · B2B SaaS · SEO · Brand Storytelling · Analytics · Optimization · Visualization</div>
+    <p class="hero-bio">I build full stack marketing engines that empower business owners and teams to seamlessly drive sales through a unmatched user experience. In today's world consumers make educated, well researched decisions. They don't commit blindly and they value trust and partnership. Content marketing is one of the best tools we have to nurture leads into loyal customers. With experience across B2B SaaS, SMB audiences, and full rebrands, I've owned editorial calendars, grown organic search, and pivoted strategies with speed and clarity. I write with point of view, measure what matters, and partner with demand gen and sales to funnel growth. </p>
+    <div class="tag-row">
+      <span class="tag">SEO &amp; organic growth</span>
+      <span class="tag">Case studies</span>
+      <span class="tag">Pillar pages</span>
+      <span class="tag">Demand gen content</span>
+      <span class="tag">Editorial calendar</span>
+      <span class="tag">Freelancer management</span>
+      <span class="tag">Brand &amp; voice</span>
+    </div>
+  </div>
+
+  <div class="parkade-note">
+    <strong>For Parkade:</strong> Multifamily operators are time-poor and skeptical of vendor content. I specialize in building trust through education — the kind that makes buyers arrive to a sales call already convinced. That's exactly what Parkade needs to shorten its sales cycle.
+  </div>
+
+  <div class="sec-label">Impact by the numbers</div>
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-num">3×</div>
+      <div class="metric-label">User acquisition YoY after TerraVita rebrand</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num"><span class="metric-ph">200%</span></div>
+      <div class="metric-label">Organic traffic growth for TerraVita within 6 months</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num"><span class="metric-ph">500+</span></div>
+      <div class="metric-label">Assets managed simultaneously</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num"><span class="metric-ph">25</span></div>
+      <div class="metric-label">Freelancers managed for HP</div>
+    </div>
+  </div>
+
+  <hr>
+  <div class="sec-label">Selected work</div>
+
+  <div class="filter-row">
+    <button class="filter-btn active" data-filter="all" onclick="filterCards(this)">All</button>
+    <button class="filter-btn" data-filter="content" onclick="filterCards(this)">Content strategy</button>
+    <button class="filter-btn" data-filter="rebrand" onclick="filterCards(this)">Rebrand + SEO</button>
+    <button class="filter-btn" data-filter="brand" onclick="filterCards(this)">Brand system</button>
+  </div>
+
+  <div class="case-card" data-type="content">
+    <div class="case-header">
+      <div>
+        <div class="case-client">HP Tech Takes</div>
+        <div class="case-title">WFH content strategy pivot during COVID-19</div>
+      </div>
+      <span class="case-type type-content">Content strategy</span>
+    </div>
+    <p class="case-desc">When COVID-19 hit, the editorial brief had to evolve rapidly. I led our department's pivot — shifting Tech Takes toward work-from-home content using frameworks I'd built previously. Fast execution without sacrificing quality or consistency.</p>
+    <button class="expand-btn" onclick="toggleExpand(this)">
+      <i class="ti ti-chevron-down"></i> Parkade relevance
+    </button>
+    <div class="expand-body">
+      <p class="case-note">Property managers face fast-moving environments too. Content that anticipates their next problem — before they search for it — is what builds the organic pipeline Parkade needs.</p>
+    </div>
+    <div class="results">
+      <span class="pill"><strong>Rapid pivot</strong> · strategy shifted within weeks</span>
+  
+      <span class="pill"><strong>Reusable framework</strong> · scaled to new verticals</span>
+    </div>
+    <div class="case-footer">
+      <span class="sk">Editorial strategy</span>
+      <span class="sk">SEO content</span>
+      <span class="sk">Enterprise</span>
+      <span class="sk">B2C</span>
+      <span class="sk">SMB</span>
+      <span class="sk">SaaS</span>
+      <a class="live-link" href="https://www.hp.com/us-en/shop/tech-takes" target="_blank">
+        <i class="ti ti-external-link"></i> View live
+      </a>
+    </div>
+  </div>
+
+  <div class="case-card" data-type="rebrand">
+    <div class="case-header">
+      <div>
+        <div class="case-client">TerraVita</div>
+        <div class="case-title">Full brand &amp; digital rebrand — SEO centered content calendar</div>
+      </div>
+      <span class="case-type type-rebrand">Rebrand + SEO</span>
+    </div>
+    <p class="case-desc">Led a complete rebrand — brand identity, website redesign, messaging, and SEO strategy. Built a content calendar with a backlog of over 50 articles to be published throughout the year while following seasonal alighnment. Repositioned TerraVita from local contractor to credible, high-end full-service company with a sharper value proposition and improved IA that search engines could rank.</p>
+    <button class="expand-btn" onclick="toggleExpand(this)">
+      <i class="ti ti-chevron-down"></i> Parkade relevance
+    </button>
+    <div class="expand-body">
+      <p class="case-note">Parkade sells to property managers who respond to professionalism and proof. The same content principles that tripled TerraVita's acquisition apply directly to building operator trust in PropTech.</p>
+    </div>
+    <div class="results">
+      <span class="pill"><span class="num">3×</span> user acquisition YoY</span>
+      <span class="pill"><span class="ph">200% organic traffic lift</span></span>
+      <span class="pill"><strong>UX lift</strong> · reduced friction in key flows</span>
+      <span class="pill"><strong>Keyword ranking</strong> primary kwds like "hardscaping service" saw a #21 > #1 av GS position</span>
+     
+    </div>
+    <div class="case-footer">
+      <span class="sk">Brand identity</span>
+      <span class="sk">Web content</span>
+      <span class="sk">SEO strategy</span>
+      <span class="sk">Messaging</span>
+      <a class="live-link" href="https://terravitaidaho.com/" target="_blank">
+        <i class="ti ti-external-link"></i> View live
+      </a>
+    </div>
+  </div>
+
+  <div class="case-card" data-type="brand">
+    <div class="case-header">
+      <div>
+        <div class="case-client">TerraVita</div>
+        <div class="case-title">Brand guidelines &amp; design system</div>
+      </div>
+      <span class="case-type type-brand">Brand system</span>
+    </div>
+    <div class="case-card">
+  <div class="case-header">
+    <div>
+      <div class="case-client">TerraVita</div>
+      <div class="case-title">Interactive Brand Guidelines</div>
+    </div>
+    <span class="case-type type-brand">Figma Prototype</span>
+  </div>
+  
+  <p class="case-desc">Below is the interactive brand book I developed. It covers the full visual and verbal identity system, designed for seamless hand-off to freelancers and internal teams.</p>
+
+  <!-- Responsive Figma Container -->
+  <div class="iframe-container">
+    <iframe src="https://embed.figma.com/proto/8LkMO8UNBtylFDeZiHwjLN/TerraVita-Branding-Guidelines-Presentation?node-id=1-199&p=f&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&embed-host=share" allowfullscreen></iframe>
+  </div>
+
+  <div class="case-results" style="margin-top: 1.5rem;">
+    <span class="result-pill"><strong>Scalable System</strong> · 20+ page guidelines</span>
+    <span class="result-pill"><strong>Reduced Friction</strong> · Automated vendor onboarding</span>
+  </div>
+</div>
+    <p class="case-desc">Developed comprehensive brand guidelines covering logo usage, color palette, typography hierarchy, tone of voice, and core values. Built to be handed off to freelancers without losing consistency — a content operator's asset, not a design exercise.</p>
+    <button class="expand-btn" onclick="toggleExpand(this)">
+      <i class="ti ti-chevron-down"></i> Parkade relevance
+    </button>
+    <div class="expand-body">
+      <p class="case-note">Parkade's Content Marketing Manager will need to set editorial standards from day one. This is exactly the kind of foundational work I do early — so quality stays consistent as the team scales.</p>
+    </div>
+    <div class="results">
+      <span class="pill"><strong>Full brand system</strong> · logo through to voice</span>
+      <span class="pill"><strong>Freelancer-ready</strong> · used across print, web, social</span>
+      <span class="pill"><strong>Editorial foundation</strong> · underpinned content at scale</span>
+    </div>
+    <div class="case-footer">
+      <span class="sk">Brand guidelines</span>
+      <span class="sk">Design system</span>
+      <span class="sk">Voice &amp; tone</span>
+    </div>
+  </div>
+
+  <hr>
+  <div class="sec-label">Skills &amp; tools</div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-card-title">SEO &amp; organic</div>
+      <div id="bars-seo"></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">Content formats</div>
+      <div class="skill-items">Case studies<br>Long-form guides<br>Blog &amp; editorial<br>Video scripts<br>Email &amp; newsletters</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">Strategy &amp; ops</div>
+      <div class="skill-items">Editorial calendar<br>Freelancer management<br>Demand gen partnership<br>Distribution<br>Pipeline reporting</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">Brand &amp; creative</div>
+      <div class="skill-items">Brand identity &amp; voice<br>Customer interviews<br>Messaging frameworks<br>Sales enablement<br>AI-assisted drafting</div>
+    </div>
+  </div>
+
+  <hr>
+  <div class="cta-bar">
+    <div>
+      <div class="cta-text">Let's talk</div>
+      <div class="cta-sub">
+        <a href="mailto:you@email.com">felq25@gmail.com</a> &nbsp;·&nbsp;
+        <a href="#">https://www.linkedin.com/in/fel-quinn/</a> &nbsp;·&nbsp;
+         <a href="#">(208) 971-0595</a> &nbsp;·&nbsp;
+      
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function filterCards(btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const f = btn.dataset.filter;
+  document.querySelectorAll('.case-card').forEach(card => {
+    card.classList.toggle('hidden', f !== 'all' && card.dataset.type !== f);
+  });
+}
+
+function toggleExpand(btn) {
+  const body = btn.nextElementSibling;
+  const icon = btn.querySelector('i');
+  const isOpen = body.classList.toggle('open');
+  icon.className = isOpen ? 'ti ti-chevron-up' : 'ti ti-chevron-down';
+  btn.childNodes[1].textContent = isOpen ? ' Hide' : ' Parkade relevance';
+}
+
+
+const seoSkills = [
+  { label: 'Keyword research', pct: 100 },
+  { label: 'Pillar pages',     pct: 90 },
+  { label: 'On-page SEO',      pct: 100 },
+  { label: 'Ahrefs/Semrush',   pct: 95 },
+  { label: 'Internal linking', pct: 90 },
+];
+// ─────────────────────────────────────────────────────────────────────────────
+
+const container = document.getElementById('bars-seo');
+seoSkills.forEach(s => {
+  container.insertAdjacentHTML('beforeend',
+    `<div class="bar-row">
+      <span class="bar-label">${s.label}</span>
+      <div class="bar-track"><div class="bar-fill" data-pct="${s.pct}"></div></div>
+    </div>`
+  );
+});
+setTimeout(() => {
+  document.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.pct + '%');
+}, 300);
+</script>
+</body>
+</html>
